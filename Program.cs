@@ -16,29 +16,24 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+var books = new List<Book>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    new Book {Id = 1, Title = "Warcraft: Lord of the Clans", Author = "Christie Golden"},
+    new Book {Id = 2, Title = "The Hobbit", Author = "J. R. R. Tolkien"},
+    new Book {Id = 3, Title = "Jurassic Park", Author = "Michael Crichton"},
+    new Book {Id = 4, Title = "Game of Thrones", Author = "George R. R. Martin"},
 };
 
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/book", () =>
 {
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+    return books;
+});
 
 app.Run();
 
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+class Book
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Author { get; set; }
 }

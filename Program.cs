@@ -62,6 +62,20 @@ app.MapPut("/book/{id}", (Book updatedBook,int id) =>
     return Results.Ok(book);
 });
 
+app.MapDelete("/book/{id}", (int id) =>
+{
+    var book = books.Find(b => b.Id == id);
+
+    if (book is null)
+    {
+        return Results.NotFound("There's a 50/50 chance it's already deleted. Check the no args GET.");
+    }
+
+    books.Remove(book);
+
+    return Results.Ok(book);
+});
+
 app.Run();
 
 class Book

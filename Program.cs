@@ -47,6 +47,21 @@ app.MapPost("book/", (Book book) =>
     return books;
 });
 
+app.MapPut("/book/{id}", (Book updatedBook,int id) =>
+{
+    var book = books.Find(b => b.Id == id);
+
+    if (book is null)
+    {
+        return Results.NotFound("Book not found. Try again.");
+    }
+
+    book.Title = updatedBook.Title;
+    book.Author = updatedBook.Author;
+
+    return Results.Ok(book);
+});
+
 app.Run();
 
 class Book

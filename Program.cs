@@ -29,6 +29,11 @@ app.MapGet("/book", () =>
     return books;
 });
 
+app.MapGet("/book/{id}", (int id) =>
+{
+    return books.Find(b => b.Id == id);
+});
+
 app.Run();
 
 class Book

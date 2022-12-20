@@ -31,8 +31,21 @@ app.MapGet("/book", () =>
 
 app.MapGet("/book/{id}", (int id) =>
 {
-    return books.Find(b => b.Id == id);
+    var book = books.Find(b => b.Id == id);
+
+    if(book is null)
+    {
+        return Results.NotFound("Book not found. Try again.");
+    }
+
+    return Results.Ok(book);
 });
+
+app.MapPost("book/", (Book book) =>
+{
+    books.Add(book);
+    return books;
+})
 
 app.Run();
 

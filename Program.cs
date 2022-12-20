@@ -73,7 +73,8 @@ app.MapDelete("/book/{id}", (int id) =>
 
     books.Remove(book);
 
-    return Results.Ok(book);
+    // return all the books to show results
+    return Results.Ok(books);
 });
 
 app.Run();

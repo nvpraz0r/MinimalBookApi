@@ -45,7 +45,7 @@ app.MapPost("book/", (Book book) =>
 {
     books.Add(book);
     return books;
-})
+});
 
 app.Run();
 
